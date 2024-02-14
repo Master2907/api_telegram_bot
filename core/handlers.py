@@ -13,3 +13,15 @@ async def getMovie(message: Message):
 
         response = 'Not found 404'
         await message.answer(response)
+
+    else:
+
+        data = response.json()
+        image = URLInputFile(
+            url=API_HOST + data['poster'],
+            filename='poster.png'
+        )
+        
+        caption = f"Title : {data['title']}\nGenres : {data['genres']}\nYear : {data['year']}\n\nDescription :\n{data['description']}"
+        
+        await message.answer_photo(photo=image, caption=caption, reply_markup=getVideoBtn(data['id']))
